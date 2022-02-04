@@ -33,15 +33,6 @@ __license__ = "MPL-2.0"
 _logger = logging.getLogger(__name__)
 
 
-# ---- Python API ----
-# The functions defined in this section can be imported by users in their
-# Python scripts/interactive interpreter, e.g. via
-# `from giftmaster.skeleton import fib`,
-# when using this Python module as a library.
-
-
-
-
 # ---- CLI ----
 # The functions defined in this section are wrappers around the main Python
 # API allowing them to be called directly from the terminal as a CLI
