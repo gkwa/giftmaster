@@ -56,7 +56,7 @@ def parse_args(args):
         version="giftmaster {ver}".format(ver=__version__),
     )
     parser.add_argument(
-        dest="files", help="list of absolue paths to files to sign", type=list
+        dest="files", help="list of absolue paths to files to sign", nargs='*'
     )
     parser.add_argument(
         "-v",
