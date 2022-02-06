@@ -93,11 +93,6 @@ linux_mac_task:
 # please check the .cirrus.yml file of PyScaffold itself for some workarounds.
 windows_task:
   name: test (Windows)
-  prereq_script:
-    - ps: [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    - ps: iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-    - ps: choco feature enable -n allowGlobalConfirmation
-    - ps: choco install windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
   tools_cache:
     folder: 'C:\tools'
     fingerprint_script:
@@ -107,6 +102,12 @@ windows_task:
       # ^  use parentheses to suppress errors
       - ps: Invoke-WebRequest -OutFile 'C:\tools\nuget.exe' 'https://dist.nuget.org/win-x86-commandline/v6.0.0/nuget.exe'
       - ps: nuget install GitForWindows -Version 2.34.1 -NonInteractive -OutputDirectory C:\tools
+  prereq_script:
+    - ps: Set-ExecutionPolicy Bypass -Scope Process -Force
+    - ps: [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    - ps: iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    - ps: choco feature enable -n allowGlobalConfirmation
+    - ps: choco install windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
   workaround_git_script:
     - git config --system core.longpaths true  # Fix for windows git checkout problems
   clone_script:
