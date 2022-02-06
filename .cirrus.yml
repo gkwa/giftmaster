@@ -141,13 +141,12 @@ windows_task:
     - choco feature enable -n allowGlobalConfirmation
     - choco feature disable -n showDownloadProgress
     - choco install python
+    - python -m pip install --upgrade pip
     - choco install windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
     # Activate long file paths to avoid some errors
     - REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
     # Set Windows encoding to UTF-8
     - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v Autorun /t REG_SZ /d "@chcp 65001>nul" /f
-  do_more_stuff_script:
-    - printenv
     - python -m ensurepip
     - python -m pip install --upgrade --user pip setuptools certifi tox
   prepare_script: *prepare
