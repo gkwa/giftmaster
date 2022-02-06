@@ -104,7 +104,7 @@ def main(args):
     setup_logging(args.loglevel)
     _logger.debug(f"file list {args.files}")
 
-    batch_size = 10
+    batch_size = 100
     file_list = args.files
     batches = [
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
