@@ -89,7 +89,7 @@ class SignTool:
 
 
 def main():
-    files_to_sign = []
+    files_to_sign = ["a.exe", "b.exe"]
     tool = SignTool.from_list(files_to_sign, dry_run=False)
 
     logging.debug("cmd: {}".format(tool.sign_cmd()))

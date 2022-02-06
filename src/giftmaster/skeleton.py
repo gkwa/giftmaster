@@ -24,7 +24,7 @@ import argparse
 import logging
 import sys
 
-from giftmaster import __version__
+from giftmaster import __version__, signtool
 
 __author__ = "Taylor Monacelli"
 __copyright__ = "Taylor Monacelli"
@@ -55,7 +55,9 @@ def parse_args(args):
         action="version",
         version="giftmaster {ver}".format(ver=__version__),
     )
-    parser.add_argument(dest="n", help="n-th Fibonacci number", type=int, metavar="INT")
+    parser.add_argument(
+        dest="files", help="list of absolue paths to files to sign", type=list
+    )
     parser.add_argument(
         "-v",
         "--verbose",
@@ -99,8 +101,10 @@ def main(args):
     """
     args = parse_args(args)
     setup_logging(args.loglevel)
-    _logger.debug("Starting crazy calculations...")
-    print("The {}-th Fibonacci number is {}".format(args.n, fib(args.n)))
+    _logger.debug(f"file list {args.files}")
+    tool = signtool.SignTool.from_list(args.files, dry_run=False)
+    logging.debug("cmd: {}".format(tool.sign_cmd()))
+    logging.debug("cmd: {}".format(tool.verify_cmd()))
     _logger.info("Script ends here")
 
 
