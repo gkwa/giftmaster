@@ -39,8 +39,8 @@ env:
     - python -m tox -e build  # Ensure PEP517-style build works
   test_script: &test
     - python -m tox -- -rfEx --durations 10 --color yes
-    - giftmaster --very-verbose
     # ^  tox is better if invoked as a module on Windows/OSX
+    - giftmaster --very-verbose
 
 
 # Deep clone script for POSIX environments (required for setuptools-scm)
