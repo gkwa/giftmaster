@@ -137,6 +137,8 @@ windows_task:
   pip_cache:
     folder: '%PIP_CACHE%'
   install_script:
+    - ps: iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    - ps: choco feature enable -n allowGlobalConfirmation
     - choco config set cacheLocation %CIRRUS_WORKING_DIR%/.chocolatey
     - choco upgrade -y chocolatey
     - choco install -y --no-progress ant
