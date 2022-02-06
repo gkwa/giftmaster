@@ -9,7 +9,7 @@ from giftmaster import timestamp
 
 
 def get_abs_path(file_list: List) -> List[pathlib.Path]:
-    return [path.resolve() for path in file_list]
+    return [pathlib.Path(_str).resolve() for _str in file_list]
 
 
 def set_signtool_path(glob: str):
