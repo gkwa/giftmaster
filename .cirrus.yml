@@ -5,7 +5,7 @@
 # Default values to be merged into tasks:
 auto_cancellation: false
 env:
-  PATH: ${HOME}/.local/bin:${PATH}
+  PATH: C:\Python311:C:\Python310:C:\Python39:${HOME}/.local/bin:${PATH}
   # ^  add user paths
   # COVERALLS_REPO_TOKEN: ENCRYPTED[]
   # ^ You can add an encrypted token or use CirrusCI web interface to set the variable
