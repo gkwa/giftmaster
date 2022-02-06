@@ -8,20 +8,43 @@ from foodsale import pathfromglob
 from giftmaster import timestamp
 
 
+def get_abs_path(file_list: List) -> List[pathlib.Path]:
+    return [path.resolve() for path in file_list]
+
+
+def set_signtool_path(glob: str):
+    paths = pathfromglob.abspathglob(glob)
+    if len(paths) < 1:
+        msg = f"glob {glob} doesn't match any paths on filesystem"
+        logging.exception(msg)
+        raise ValueError(msg)
+
+    if len(paths) > 1:
+        msg = (
+            f"glob {glob} matches too many paths on filesystem.  "
+            "Not sure i'm choosing the one you want"
+        )
+        logging.warning(msg)
+
+    path = paths[0]
+
+    if not path.exists():
+        msg = f"{path} does not exist"
+        logging.exception(msg)
+        raise ValueError(msg)
+
+    return path
+
+
 class SignTool:
     HASH_ALGORITHM = "SHA256"
     url_manager = timestamp.TimeStampURLManager()
 
     def __init__(self, files_to_sign):
-        paths = pathfromglob.abspathglob(
+        self.files_to_sign = get_abs_path(files_to_sign)
+        self.signtool_path = set_signtool_path(
             r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe"
         )
-        assert len(paths) == 1
-        signtool_path = paths[0]
-        assert signtool_path.exists()
-        self.files_to_sign = files_to_sign
-        self.signtool_path = signtool_path
-        logging.debug("signtool path: {}".format(signtool_path))
 
     @classmethod
     def from_list(cls, paths: List[pathlib.Path], dry_run=False):
@@ -45,7 +68,7 @@ class SignTool:
         stdout, stderr = process.communicate()
         err_path.write_text(stderr.decode())
         log_path.write_text(stdout.decode())
-        logging.debug(stderr)
+        logging.debug(stderr.decode())
 
     def verify_cmd(self):
         prefix = [
