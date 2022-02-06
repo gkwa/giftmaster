@@ -5,7 +5,7 @@ from typing import List
 
 import pytest
 
-from giftmaster import signtool
+from giftmaster import signtool, skeleton
 
 __author__ = "Taylor Monacelli"
 __copyright__ = "Taylor Monacelli"
@@ -32,10 +32,14 @@ def test_main(file_list):
     batches = [
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
     ]
+    signtool_candidates = [
+        r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+        r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
+    ]
     for batch in batches:
         tool = signtool.SignTool.from_list(
             batch,
-            signtool=r"C:\Program*\Windows Kits\*\bin\*\x64\signtool.exe",
+            signtool=signtool_candidates,
             dry_run=False,
         )
 
@@ -44,6 +48,6 @@ def test_main(file_list):
 
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
-    # main(["7"])
+    skeleton.main([batches[0], "--signtool", signtool_candidates])
     # captured = capsys.readouterr()
     # assert "The 7-th Fibonacci number is 13" in captured.out

@@ -56,6 +56,12 @@ def parse_args(args):
         version="giftmaster {ver}".format(ver=__version__),
     )
     parser.add_argument(
+        "--signtool",
+        nargs="*",
+        requred=False,
+        help="list of absolute paths possibly containing wildcards that will match path to signtool.exe",
+    )
+    parser.add_argument(
         dest="files", help="list of absolue paths to files to sign", nargs="*"
     )
     parser.add_argument(
@@ -110,14 +116,14 @@ def main(args):
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
     ]
 
-    signtool_glob = [
+    signtool_candidates = [
         r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
         r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
     ]
     for batch in batches:
         tool = signtool.SignTool.from_list(
             batch,
-            signtool=signtool_glob,
+            signtool=signtool_candidates,
             dry_run=False,
         )
         cmd = tool.sign_cmd()
