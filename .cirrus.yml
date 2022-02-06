@@ -40,6 +40,7 @@ env:
   test_script: &test
     - python -m tox -- -rfEx --durations 10 --color yes
     # ^  tox is better if invoked as a module on Windows/OSX
+    - pip install -e .
     - giftmaster --very-verbose
 
 
