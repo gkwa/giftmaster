@@ -94,7 +94,6 @@ linux_mac_task:
 windows_task:
   name: test (Windows)
   prereq_script:
-    - ps: Set-ExecutionPolicy Bypass -Scope Process -Force
     - ps: [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
     - ps: iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
     - ps: choco feature enable -n allowGlobalConfirmation
