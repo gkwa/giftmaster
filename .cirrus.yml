@@ -42,8 +42,8 @@ env:
     # ^  tox is better if invoked as a module on Windows/OSX
     - pip install .
     - ps: |
-      $files = Get-ChildItem 'C:\Windows\System32' -Recurse | Where-Object { ! $_.PSIsContainer } | Select-Object -last 10
-      giftmaster --very-verbose $files
+        $files = Get-ChildItem 'C:\Windows\System32' -Recurse | Where-Object { ! $_.PSIsContainer } | Select-Object -last 10
+        giftmaster --very-verbose $files
 
 
 
