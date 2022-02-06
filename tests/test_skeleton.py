@@ -39,8 +39,8 @@ def test_main(file_list):
             dry_run=False,
         )
 
-    logging.debug(tool.sign_cmd())
-    logging.debug(tool.verify_cmd())
+        logging.debug(tool.sign_cmd())
+        logging.debug(tool.verify_cmd())
 
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
