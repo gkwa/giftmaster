@@ -138,8 +138,9 @@ windows_task:
     folder: '%PIP_CACHE%'
   install_script:
     - choco config set cacheLocation %CIRRUS_WORKING_DIR%/.chocolatey
-    - choco install --yes python
-    - choco install --yes windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
+    - choco feature enable --name allowGlobalConfirmation
+    - choco install python
+    - choco install windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
     # Activate long file paths to avoid some errors
     - REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
     # Set Windows encoding to UTF-8
