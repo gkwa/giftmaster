@@ -116,7 +116,7 @@ windows_task:
       git reset --hard %CIRRUS_CHANGE_IN_REPO%
     )
   windows_container:
-    image: "python:3.8-windowsservercore"
+    image: "cirrusci/windowsservercore:2019"
     os_version: 2019
   env:
     # Single quotes are used bellow to escape Windows backslash and % (YAML restrictions).
