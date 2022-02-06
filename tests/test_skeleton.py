@@ -1,6 +1,9 @@
 import logging
 import pathlib
 import shutil
+from typing import List
+
+import pytest
 
 from giftmaster import signtool
 
@@ -9,11 +12,13 @@ __copyright__ = "Taylor Monacelli"
 __license__ = "MPL-2.0"
 
 
-def get_test_pathlist():
+@pytest.fixture
+def file_list() -> List[pathlib.Path]:
     scratch = pathlib.Path("scratch")
     scratch.mkdir(parents=True, exist_ok=True)
-    lst = list(pathlib.Path(r"C:\Windows\System32").glob("*.exe"))
+
     lst2 = []
+    lst = list(pathlib.Path(r"C:\Windows\System32").glob("*.exe"))
     for path in lst[:1000]:
         new = scratch / path.name
         shutil.copy(path, new)
@@ -22,8 +27,8 @@ def get_test_pathlist():
     return lst2
 
 
-def test_main(capsys):
-    files_to_sign = get_test_pathlist()
+def test_main(file_list):
+    files_to_sign = file_list
     tool = signtool.SignTool.from_list(
         files_to_sign,
         signtool=r"C:\Program*\Windows Kits\*\bin\*\x64\signtool.exe",
