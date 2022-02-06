@@ -139,6 +139,7 @@ windows_task:
   install_script:
     - choco config set cacheLocation %CIRRUS_WORKING_DIR%/.chocolatey
     - choco feature enable -n allowGlobalConfirmation
+    - choco feature disable -n showDownloadProgress
     - choco install python
     - choco install windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
     # Activate long file paths to avoid some errors
