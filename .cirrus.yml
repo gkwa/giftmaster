@@ -5,7 +5,7 @@
 # Default values to be merged into tasks:
 auto_cancellation: false
 env:
-  PATH: C:\Python311:C:\Python310:C:\Python39:${HOME}/.local/bin:${PATH}
+  PATH: ${HOME}/.local/bin:${PATH}
   # ^  add user paths
   # COVERALLS_REPO_TOKEN: ENCRYPTED[]
   # ^ You can add an encrypted token or use CirrusCI web interface to set the variable
@@ -120,8 +120,8 @@ windows_task:
     os_version: 2019
   env:
     # Single quotes are used bellow to escape Windows backslash and % (YAML restrictions).
-    PYTHON_HOME: 'C:\Python'
-    PYTHON_APPDATA: '%APPDATA%\Python\Python38'
+    PYTHON_HOME: 'C:\Python9'
+    PYTHON_APPDATA: '%APPDATA%\Python\Python39'
     # ^  update when python version changes
     GIT_HOME: 'C:\tools\GitForWindows.2.34.1\tools'
     # ^ update when git version changes
