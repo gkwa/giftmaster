@@ -46,7 +46,6 @@ env:
         giftmaster --very-verbose $files
 
 
-
 # Deep clone script for POSIX environments (required for setuptools-scm)
 .clone_script: &clone |
   if [ -z "$CIRRUS_PR" ]; then
