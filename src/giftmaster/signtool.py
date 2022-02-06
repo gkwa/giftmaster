@@ -46,7 +46,7 @@ class SignTool:
         stdout, stderr = process.communicate()
         err_path.write_text(stderr.decode())
         log_path.write_text(stdout.decode())
-        self.logger.debug(stderr)
+        logging.debug(stderr)
 
     def verify_cmd(self):
         prefix = [
