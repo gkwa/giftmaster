@@ -94,6 +94,13 @@ linux_mac_task:
 windows_task:
   name: test (Windows)
   tools_cache:
+    install_prereq_script:
+      - ps: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          choco feature enable -n allowGlobalConfirmation
+          choco install windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
     folder: 'C:\tools'
     fingerprint_script:
       - ps: echo "$env:CIRRUS_OS - nuget v6.0.0 - git 2.34.1"
