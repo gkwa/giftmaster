@@ -54,9 +54,6 @@ class SignTool:
         return tool
 
     def run(self, cmd):
-        """
-        python subprocess spaces path
-        """
         process = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
@@ -67,7 +64,7 @@ class SignTool:
         stdout, stderr = process.communicate()
         err_path.write_text(stderr.decode())
         log_path.write_text(stdout.decode())
-        logging.debug(stderr.decode())
+        logging.warning(stderr.decode())
 
     def verify_cmd(self):
         prefix = [
