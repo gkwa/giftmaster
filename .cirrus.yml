@@ -146,7 +146,7 @@ windows_task:
     - REG ADD "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f
     # Set Windows encoding to UTF-8
     - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v Autorun /t REG_SZ /d "@chcp 65001>nul" /f
-  do_more_stuff:
+  do_more_stuff_script:
     - python -m ensurepip
     - python -m pip install --upgrade --user pip setuptools certifi tox
   prepare_script: *prepare
