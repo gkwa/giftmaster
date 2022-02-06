@@ -57,6 +57,7 @@ env:
 # ---- Task definitions ----
 
 linux_mac_task:
+  only_if: "$skip_these_tests == '1'"  #blocking these test from running
   # Use custom cloning since otherwise git tags are missing
   clone_script: *clone
   matrix:
@@ -152,6 +153,7 @@ windows_task:
 
 
 coverage_task:
+  only_if: "$skip_these_tests == '1'"  #blocking these test from running
   name: coverage (Linux - 3.6)
   clone_script: *clone
   container: {image: "python:3.6-buster"}
