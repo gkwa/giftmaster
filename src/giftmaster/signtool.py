@@ -48,7 +48,6 @@ class SignTool:
 
     @classmethod
     def from_list(cls, paths: List[pathlib.Path], dry_run=False):
-        logging.debug("sign() called")
         tool = cls(paths)
         if not dry_run:
             tool.run(tool.sign_cmd())
