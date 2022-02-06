@@ -103,7 +103,11 @@ def main(args):
     args = parse_args(args)
     setup_logging(args.loglevel)
     _logger.debug(f"file list {args.files}")
-    tool = signtool.SignTool.from_list(args.files, dry_run=False)
+    tool = signtool.SignTool.from_list(
+        args.files,
+        signtool=r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+        dry_run=False,
+    )
 
     cmd = tool.sign_cmd()
     logging.debug(" ".join(cmd))
