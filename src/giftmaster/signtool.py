@@ -25,8 +25,7 @@ class SignTool:
 
     @classmethod
     def from_list(cls, paths: List[pathlib.Path], dry_run=False):
-        logger = logging.getLogger(__name__)
-        logger.debug("sign() called")
+        logging.debug("sign() called")
         tool = cls(paths)
         if not dry_run:
             tool.run(tool.sign_cmd())
@@ -50,7 +49,7 @@ class SignTool:
 
     def verify_cmd(self):
         prefix = [
-            str(self.path),
+            str(self.signtool_path),
             "verify",
             "/v",
         ]
