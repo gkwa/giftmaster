@@ -147,7 +147,6 @@ windows_task:
     # Set Windows encoding to UTF-8
     - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v Autorun /t REG_SZ /d "@chcp 65001>nul" /f
   do_more_stuff_script:
-    - ps: 'Get-ChildItem -Recurse C:\Python310'
     - printenv
     - python -m ensurepip
     - python -m pip install --upgrade --user pip setuptools certifi tox
