@@ -107,7 +107,6 @@ windows_task:
       - ps: '[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072'
       - ps: iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
       - ps: choco feature enable -n allowGlobalConfirmation
-      - ps: choco install windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
     install_signtool_script:
       - ps: choco install windows-sdk-10.1 --override-arguments --install-args="'/quiet /features Optionid.MSIInstallTools Optionid.SigningTools'"
   workaround_git_script:
