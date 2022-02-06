@@ -1,26 +1,30 @@
 import logging
 import pathlib
 import subprocess
+from typing import List
 
-from giftmaster import pathfromglob, timestamp
+from foodsale import pathfromglob
+
+from giftmaster import timestamp
 
 
 class SignTool:
     HASH_ALGORITHM = "SHA256"
     url_manager = timestamp.TimeStampURLManager()
 
-    def __init__(self, pathlist):
-        self.logger = logging.getLogger(__name__)
-        self.pathlist = pathlist
-        candidates = r"""
-        C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe
-        """
-        path = pathfromglob.PathFromGlob.from_string(candidates).path
-        self.path = path
-        self.logger.debug("signtool path: {}".format(path))
+    def __init__(self, files_to_sign):
+        paths = pathfromglob.abspathglob(
+            r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe"
+        )
+        assert len(paths) == 1
+        signtool_path = paths[0]
+        assert signtool_path.exists()
+        self.files_to_sign = files_to_sign
+        self.signtool_path = signtool_path
+        logging.debug("signtool path: {}".format(signtool_path))
 
     @classmethod
-    def from_list(cls, paths, dry_run=False):
+    def from_list(cls, paths: List[pathlib.Path], dry_run=False):
         logger = logging.getLogger(__name__)
         logger.debug("sign() called")
         tool = cls(paths)
@@ -45,7 +49,6 @@ class SignTool:
         self.logger.debug(stderr)
 
     def verify_cmd(self):
-        # signtool.exe verify /v /pa C:\spectra_installer\installer\Work1\dist\SpectraControlPanel.exe
         prefix = [
             str(self.path),
             "verify",
@@ -53,7 +56,7 @@ class SignTool:
         ]
 
         x = ["/pa"]
-        x.extend(self.pathlist)
+        x.extend(self.files_to_sign)
 
         cmd = []
         cmd.extend(prefix)
@@ -80,13 +83,14 @@ class SignTool:
             type(self).HASH_ALGORITHM,
         ]
 
-        cmd.extend(self.pathlist)
+        cmd.extend(self.files_to_sign)
 
         return cmd
 
 
 def main():
-    tool = SignTool.from_list(pathlist, dry_run=False)
+    files_to_sign = []
+    tool = SignTool.from_list(files_to_sign, dry_run=False)
 
     logging.debug("cmd: {}".format(tool.sign_cmd()))
     logging.debug("cmd: {}".format(tool.verify_cmd()))
