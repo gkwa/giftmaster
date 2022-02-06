@@ -148,8 +148,8 @@ windows_task:
     - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v Autorun /t REG_SZ /d "@chcp 65001>nul" /f
   do_more_stuff_script:
     - printenv
-    - python3 -m ensurepip
-    - python3 -m pip install --upgrade --user pip setuptools certifi tox
+    - python -m ensurepip
+    - python -m pip install --upgrade --user pip setuptools certifi tox
   prepare_script: *prepare
   clean_workspace_script:
     # Avoid information carried from one run to the other
