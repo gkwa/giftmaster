@@ -66,7 +66,7 @@ class SignTool:
 
     def sign_cmd(self):
         cmd = [
-            str(self.path),
+            str(self.signtool_path),
             "sign",
             "/v",
             "/n",
