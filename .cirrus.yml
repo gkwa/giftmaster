@@ -120,8 +120,8 @@ windows_task:
     os_version: 2019
   env:
     # Single quotes are used bellow to escape Windows backslash and % (YAML restrictions).
-    PYTHON_HOME: 'C:\Python10'
-    PYTHON_APPDATA: '%APPDATA%\Python\Python10'
+    PYTHON_HOME: 'C:\Python310'
+    PYTHON_APPDATA: '%APPDATA%\Python\Python310'
     # ^  update when python version changes
     GIT_HOME: 'C:\tools\GitForWindows.2.34.1\tools'
     # ^ update when git version changes
@@ -147,6 +147,7 @@ windows_task:
     # Set Windows encoding to UTF-8
     - REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Command Processor" /v Autorun /t REG_SZ /d "@chcp 65001>nul" /f
   do_more_stuff_script:
+    - ps: Get-ChildItem -Recurse C:\Python -Filter "*.txt"
     - printenv
     - python -m ensurepip
     - python -m pip install --upgrade --user pip setuptools certifi tox
