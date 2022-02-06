@@ -1,9 +1,8 @@
+import logging
 import pathlib
 import shutil
 
-import pytest
-
-from giftmaster.skeleton import fib
+from giftmaster import signtool
 
 __author__ = "Taylor Monacelli"
 __copyright__ = "Taylor Monacelli"
@@ -24,8 +23,16 @@ def get_test_pathlist():
 
 
 def test_main(capsys):
-    """CLI Tests"""
-    pathlist = get_test_pathlist()
+    files_to_sign = get_test_pathlist()
+    tool = signtool.SignTool.from_list(
+        files_to_sign,
+        signtool=r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+        dry_run=False,
+    )
+
+    logging.debug(f"{tool.sign_cmd()}")
+    logging.debug(f"{tool.verify_cmd()}")
+
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
     # main(["7"])
