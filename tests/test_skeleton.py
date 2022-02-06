@@ -26,7 +26,7 @@ def test_main(capsys):
     files_to_sign = get_test_pathlist()
     tool = signtool.SignTool.from_list(
         files_to_sign,
-        signtool=r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+        signtool=r"C:\Program*\Windows Kits\*\bin\*\x64\signtool.exe",
         dry_run=False,
     )
 
