@@ -43,7 +43,7 @@ env:
     - pip install .
     - ps: |
         $files = Get-ChildItem 'C:\Windows\System32' -Recurse | 
-          Where-Object { ! $_.PSIsContainer } | Select-Object -last 10
+          Where-Object { ! $_.PSIsContainer } | Select-Object -last 100
         giftmaster --very-verbose $files
 
 
