@@ -109,10 +109,15 @@ def main(args):
     batches = [
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
     ]
+
+    signtool = [
+        r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+        r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
+    ]
     for batch in batches:
         tool = signtool.SignTool.from_list(
             batch,
-            signtool=r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+            signtool=signtool,
             dry_run=False,
         )
         cmd = tool.sign_cmd()

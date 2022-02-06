@@ -16,17 +16,17 @@ class SignTool:
     HASH_ALGORITHM = "SHA256"
     url_manager = timestamp.TimeStampURLManager()
 
-    def set_path(self, glob: str):
+    def set_path(self, globs: List[str]):
         def validate(glob):
-            paths = pathfromglob.abspathglob(glob)
+            paths = pathfromglob.abspathglob(globs)
             if len(paths) < 1:
-                msg = f"glob {glob} doesn't match any paths on filesystem"
+                msg = f"no glob from list {globs} matche any paths on filesystem"
                 logging.exception(msg)
                 raise ValueError(msg)
 
             if len(paths) > 1:
                 msg = (
-                    f"glob {glob} matches too many paths on filesystem.  "
+                    f"globs {globs} match too many paths on filesystem.  "
                     "Not sure i'm choosing the one you want"
                 )
                 logging.warning(msg)
@@ -39,7 +39,7 @@ class SignTool:
                 raise ValueError(msg)
             return path
 
-        self.path = validate(glob)
+        self.path = validate(globs)
 
     def __init__(self, files_to_sign):
         self.files_to_sign = get_abs_path(files_to_sign)
