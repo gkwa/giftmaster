@@ -28,12 +28,14 @@ def file_list() -> List[pathlib.Path]:
 
 
 def test_main(file_list):
-    files_to_sign = file_list
-    tool = signtool.SignTool.from_list(
-        files_to_sign,
-        signtool=r"C:\Program*\Windows Kits\*\bin\*\x64\signtool.exe",
-        dry_run=False,
-    )
+    n = 100
+    batches = [file_list[i : i + n] for i in range(0, len(file_list), n)]
+    for batch in batches:
+        tool = signtool.SignTool.from_list(
+            batch,
+            signtool=r"C:\Program*\Windows Kits\*\bin\*\x64\signtool.exe",
+            dry_run=False,
+        )
 
     logging.debug(tool.sign_cmd())
     logging.debug(tool.verify_cmd())
