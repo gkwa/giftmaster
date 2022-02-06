@@ -17,7 +17,7 @@ class SignTool:
     url_manager = timestamp.TimeStampURLManager()
 
     def set_path(self, globs: List[str]):
-        def validate(glob):
+        def validate(globs):
             paths = pathfromglob.abspathglob(globs)
             if len(paths) < 1:
                 msg = f"no glob from list {globs} matche any paths on filesystem"
@@ -45,7 +45,7 @@ class SignTool:
         self.files_to_sign = get_abs_path(files_to_sign)
 
     @classmethod
-    def from_list(cls, paths: List[pathlib.Path], signtool: str, dry_run=False):
+    def from_list(cls, paths: List[pathlib.Path], signtool: List[str], dry_run=False):
         tool = cls(paths)
         tool.set_path(signtool)
         if not dry_run:
