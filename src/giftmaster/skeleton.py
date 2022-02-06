@@ -56,7 +56,7 @@ def parse_args(args):
         version="giftmaster {ver}".format(ver=__version__),
     )
     parser.add_argument(
-        dest="files", help="list of absolue paths to files to sign", nargs='*'
+        dest="files", help="list of absolue paths to files to sign", nargs="*"
     )
     parser.add_argument(
         "-v",
@@ -104,8 +104,13 @@ def main(args):
     setup_logging(args.loglevel)
     _logger.debug(f"file list {args.files}")
     tool = signtool.SignTool.from_list(args.files, dry_run=False)
-    logging.debug("cmd: {}".format(tool.sign_cmd()))
-    logging.debug("cmd: {}".format(tool.verify_cmd()))
+
+    cmd = tool.sign_cmd()
+    logging.debug(" ".join(cmd))
+
+    cmd = tool.verify_cmd()
+    logging.debug(" ".join(cmd))
+
     _logger.info("Script ends here")
 
 
