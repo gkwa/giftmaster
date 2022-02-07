@@ -40,7 +40,7 @@ def test_main(file_list2):
     # https://docs.pytest.org/en/stable/capture.html
     skeleton.main(
         [
-            *file_list,
+            *file_list2,
             "--signtool",
             r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
             r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
