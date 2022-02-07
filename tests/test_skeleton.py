@@ -17,7 +17,7 @@ def large_file_list() -> List[pathlib.Path]:
     scratch.mkdir(parents=True, exist_ok=True)
 
     lst2 = []
-    lst = list(pathlib.Path(r"C:\Windows\System32").glob("**/*.exe"))
+    lst = list(pathlib.Path(r"C:\Windows").glob("**/*.exe"))
     for path in lst[:1000]:
         new = scratch / path.name
         shutil.copy(path, new)
