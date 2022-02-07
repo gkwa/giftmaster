@@ -110,15 +110,12 @@ def main(args):
     setup_logging(args.loglevel)
     _logger.debug(f"file list {args.files}")
 
-    batch_size = 100
     file_list = args.files
+    signtool_candidates = args.signtool
+
+    batch_size = 10
     batches = [
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
-    ]
-
-    signtool_candidates = [
-        r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
-        r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
     ]
     for batch in batches:
         tool = signtool.SignTool.from_list(
@@ -126,11 +123,9 @@ def main(args):
             signtool=signtool_candidates,
             dry_run=False,
         )
-        cmd = tool.sign_cmd()
-        logging.debug(" ".join(cmd))
 
-        cmd = tool.verify_cmd()
-        logging.debug(" ".join(cmd))
+        logging.debug(tool.sign_cmd())
+        logging.debug(tool.verify_cmd())
 
     _logger.info("Script ends here")
 
