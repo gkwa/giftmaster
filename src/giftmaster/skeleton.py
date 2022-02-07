@@ -121,16 +121,15 @@ def main(args):
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
     ]
 
-    batch = batches[0]
-    print("batch", batch)
-    tool = signtool.SignTool.from_list(
-        batch,
-        signtool=signtool_candidates,
-        dry_run=False,
-    )
+    for batch in batches:
+        tool = signtool.SignTool.from_list(
+            batch,
+            signtool=signtool_candidates,
+            dry_run=False,
+        )
 
-    logging.debug(tool.sign_cmd())
-    logging.debug(tool.verify_cmd())
+        logging.debug(tool.sign_cmd())
+        logging.debug(tool.verify_cmd())
 
     _logger.info("Script ends here")
 
