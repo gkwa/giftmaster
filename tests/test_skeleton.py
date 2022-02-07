@@ -38,12 +38,15 @@ def file_list2() -> List[pathlib.Path]:
 def test_main(file_list2):
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
+    candidates = [
+        r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+        r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
+    ]
     skeleton.main(
         [
             *file_list2,
             "--signtool",
-            r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
-            r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
+            *candidates,
         ]
     )
     # captured = capsys.readouterr()
