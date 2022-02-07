@@ -110,8 +110,7 @@ def main(args):
     _logger.debug(f"file list {args.files}")
 
     file_list = args.files
-    signtool_candidates = args.signtool[0]
-
+    signtool_candidates = args.signtool
     print("signtool", signtool_candidates)
 
     batch_size = 10
@@ -119,7 +118,7 @@ def main(args):
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
     ]
 
-    batch = batches[0][0]
+    batch = batches[0]
     print("batch", batch)
     tool = signtool.SignTool.from_list(
         batch,

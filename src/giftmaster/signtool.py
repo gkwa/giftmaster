@@ -16,7 +16,7 @@ class SignTool:
     HASH_ALGORITHM = "SHA256"
     url_manager = timestamp.TimeStampURLManager()
 
-    def set_path(self, *globs: List[str]):
+    def set_path(self, globs: List[str]):
         def validate(globs):
             paths = pathfromglob.abspathglob(globs)
             if len(paths) < 1:

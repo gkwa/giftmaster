@@ -36,13 +36,17 @@ def file_list2() -> List[pathlib.Path]:
 
 
 def test_main(file_list2):
-    signtool_candidates = [
-        r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
-        r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
-    ]
 
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
-    skeleton.main([file_list2, "--signtool", signtool_candidates])
+    skeleton.main(
+        [
+            r"C:\Windows\System32\a.exe",
+            r"C:\Windows\System32\b.exe",
+            "--signtool",
+            r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+            r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
+        ]
+    )
     # captured = capsys.readouterr()
     # assert "The 7-th Fibonacci number is 13" in captured.out
