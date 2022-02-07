@@ -64,7 +64,7 @@ class SignTool:
             )
         except FileNotFoundError as ex:
             logging.exception(ex)
-            raise ex
+            # raise ex
 
         log_path = pathlib.Path(f"signtool.log")
         err_path = pathlib.Path(f"signtool.err")
