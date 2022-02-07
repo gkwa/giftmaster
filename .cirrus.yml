@@ -44,7 +44,7 @@ env:
     - ps: |
         $files = Get-ChildItem 'C:\Windows\System32' -Recurse | 
           Where-Object { ! $_.PSIsContainer } | Select-Object -last 1000
-        giftmaster --very-verbose $files
+        giftmaster --very-verbose $files --signtool "C:\Program*\Windows*\*\*\*\x64\signtool.exe"
 
 
 # Deep clone script for POSIX environments (required for setuptools-scm)
