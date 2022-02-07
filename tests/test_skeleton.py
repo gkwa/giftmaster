@@ -63,10 +63,10 @@ def test_main_batch_size(large_file_list):
     skeleton.main(
         [
             *large_file_list,
-            "--batch-size",
-            "10",
             "--signtool",
             *candidates,
+            "--batch-size",
+            "10",
         ]
     )
     # captured = capsys.readouterr()
