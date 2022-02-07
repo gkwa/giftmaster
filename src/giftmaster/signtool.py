@@ -19,7 +19,7 @@ class SignTool:
     def set_path(self, globs: List[str]):
         def validate(globs):
             print("globs",globs)
-            paths = pathfromglob.abspathglob(globs)
+            paths = pathfromglob.abspathglob(*globs)
             if len(paths) < 1:
                 msg = f"no glob from list {globs} matche any paths on filesystem"
                 logging.exception(msg)
