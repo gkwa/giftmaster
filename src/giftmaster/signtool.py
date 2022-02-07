@@ -55,11 +55,17 @@ class SignTool:
         return tool
 
     def run(self, cmd):
-        process = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
+        try:
+            logging.debug(" ".join(cmd))
+            process = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+        except FileNotFoundError as ex:
+            logging.exception(ex)
+            raise ex
+
         log_path = pathlib.Path(f"signtool.log")
         err_path = pathlib.Path(f"signtool.err")
         stdout, stderr = process.communicate()
