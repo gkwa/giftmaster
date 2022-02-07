@@ -72,3 +72,17 @@ def test_main_batch_size(file_list2):
     )
     # captured = capsys.readouterr()
     # assert "The 7-th Fibonacci number is 13" in captured.out
+
+
+def test_main_default_signtoo_makes_simple_invocation(file_list2):
+    # capsys is a pytest fixture that allows asserts agains stdout/stderr
+    # https://docs.pytest.org/en/stable/capture.html
+    skeleton.main(
+        [
+            *file_list2,
+            "--batch-size",
+            10,
+        ]
+    )
+    # captured = capsys.readouterr()
+    # assert "The 7-th Fibonacci number is 13" in captured.out
