@@ -35,7 +35,26 @@ def file_list2() -> List[pathlib.Path]:
     ]
 
 
-def test_main(file_list2):
+def test_main_with_too_many_files_causes_exception(file_list2):
+    # capsys is a pytest fixture that allows asserts agains stdout/stderr
+    # https://docs.pytest.org/en/stable/capture.html
+    candidates = [
+        r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+        r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
+    ]
+    with pytest.raises(FileNotFoundError):
+        skeleton.main(
+            [
+                *file_list2,
+                "--signtool",
+                *candidates,
+            ]
+        )
+    # captured = capsys.readouterr()
+    # assert "The 7-th Fibonacci number is 13" in captured.out
+
+
+def test_main_batch_size(file_list2):
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
     candidates = [
@@ -45,6 +64,8 @@ def test_main(file_list2):
     skeleton.main(
         [
             *file_list2,
+            "--batch-size",
+            10,
             "--signtool",
             *candidates,
         ]
