@@ -58,7 +58,6 @@ def parse_args(args):
     parser.add_argument(
         "--signtool",
         nargs="*",
-        requred=False,
         help="list of absolute paths possibly containing wildcards that will match path to signtool.exe",
     )
     parser.add_argument(
@@ -117,15 +116,17 @@ def main(args):
     batches = [
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
     ]
-    for batch in batches:
-        tool = signtool.SignTool.from_list(
-            batch,
-            signtool=signtool_candidates,
-            dry_run=False,
-        )
 
-        logging.debug(tool.sign_cmd())
-        logging.debug(tool.verify_cmd())
+    batch = batches[0][0]
+    print("batch", batch)
+    tool = signtool.SignTool.from_list(
+        batch,
+        signtool=signtool_candidates,
+        dry_run=False,
+    )
+
+    logging.debug(tool.sign_cmd())
+    logging.debug(tool.verify_cmd())
 
     _logger.info("Script ends here")
 

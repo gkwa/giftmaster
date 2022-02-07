@@ -47,7 +47,8 @@ class SignTool:
         self.files_to_sign = get_abs_path(files_to_sign)
 
     @classmethod
-    def from_list(cls, paths: List[pathlib.Path], signtool: List[str], dry_run=False):
+    def from_list(cls, paths: List[str], signtool: List[str], dry_run=False):
+        print(paths)
         tool = cls(paths)
         tool.set_path(signtool)
         if not dry_run:
@@ -108,15 +109,7 @@ class SignTool:
 
 
 def main():
-    files_to_sign = ["a.exe", "b.exe"]
-    tool = SignTool.from_list(
-        files_to_sign,
-        signtool=r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
-        dry_run=False,
-    )
-
-    logging.debug(f"{tool.sign_cmd()}")
-    logging.debug(f"{tool.verify_cmd()}")
+    pass
 
 
 if __name__ == "__main__":
