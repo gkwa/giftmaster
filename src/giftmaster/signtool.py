@@ -48,8 +48,9 @@ class SignTool:
 
     @classmethod
     def from_list(cls, paths: List[str], signtool: List[str], dry_run=False):
-        print(paths)
         tool = cls(paths)
+        print(paths)
+        print(signtool)
         tool.set_path(signtool)
         if not dry_run:
             tool.run(tool.sign_cmd())
