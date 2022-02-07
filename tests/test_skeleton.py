@@ -13,7 +13,7 @@ __license__ = "MPL-2.0"
 
 
 @pytest.fixture
-def file_list() -> List[pathlib.Path]:
+def large_file_list() -> List[pathlib.Path]:
     scratch = pathlib.Path("scratch")
     scratch.mkdir(parents=True, exist_ok=True)
 
@@ -28,14 +28,14 @@ def file_list() -> List[pathlib.Path]:
 
 
 @pytest.fixture
-def file_list2() -> List[pathlib.Path]:
+def small_file_list() -> List[pathlib.Path]:
     return [
         r"C:\Windows\System32\a.exe",
         r"C:\Windows\System32\b.exe",
     ]
 
 
-def test_main_with_too_many_files_causes_exception(file_list2):
+def test_main_with_too_many_files_causes_exception(large_file_list):
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
     candidates = [
@@ -45,7 +45,7 @@ def test_main_with_too_many_files_causes_exception(file_list2):
     with pytest.raises(FileNotFoundError):
         skeleton.main(
             [
-                *file_list2,
+                *large_file_list,
                 "--signtool",
                 *candidates,
             ]
@@ -54,7 +54,7 @@ def test_main_with_too_many_files_causes_exception(file_list2):
     # assert "The 7-th Fibonacci number is 13" in captured.out
 
 
-def test_main_batch_size(file_list2):
+def test_main_batch_size(large_file_list):
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
     candidates = [
@@ -63,7 +63,7 @@ def test_main_batch_size(file_list2):
     ]
     skeleton.main(
         [
-            *file_list2,
+            *large_file_list,
             "--batch-size",
             10,
             "--signtool",
@@ -74,12 +74,12 @@ def test_main_batch_size(file_list2):
     # assert "The 7-th Fibonacci number is 13" in captured.out
 
 
-def test_main_default_signtoo_makes_simple_invocation(file_list2):
+def test_main_default_signtool_makes_simple_invocation(small_file_list):
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
     skeleton.main(
         [
-            *file_list2,
+            *small_file_list,
             "--batch-size",
             10,
         ]
