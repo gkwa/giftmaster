@@ -41,14 +41,13 @@ def test_main_with_too_many_files_causes_exception(large_file_list):
         r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
         r"C:\Program*\Windows*\*\*\*\x64\signtool.exe",
     ]
-    with pytest.raises(OSError):
-        skeleton.main(
-            [
-                *large_file_list,
-                "--signtool",
-                *candidates,
-            ]
-        )
+    skeleton.main(
+        [
+            *large_file_list,
+            "--signtool",
+            *candidates,
+        ]
+    )
     # captured = capsys.readouterr()
     # assert "The 7-th Fibonacci number is 13" in captured.out
 
