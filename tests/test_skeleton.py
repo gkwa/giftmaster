@@ -44,7 +44,7 @@ def test_main(file_list2):
     ]
     skeleton.main(
         [
-            *file_list2,
+            *file_list2(),
             "--signtool",
             *candidates,
         ]
