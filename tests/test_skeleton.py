@@ -23,7 +23,7 @@ def large_file_list() -> List[pathlib.Path]:
         shutil.copy(path, new)
         lst2.append(new)
 
-    return lst2
+    return [str(path) for path in lst2]
 
 
 @pytest.fixture
