@@ -58,6 +58,9 @@ def parse_args(args):
     parser.add_argument(
         "--signtool",
         nargs="*",
+        default=[
+            r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
+        ],
         help="list of absolute paths possibly containing wildcards that will match path to signtool.exe",
     )
     parser.add_argument(
