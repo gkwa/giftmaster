@@ -39,6 +39,13 @@ _logger = logging.getLogger(__name__)
 # executable/script.
 
 
+def check_positive(value):
+    ivalue = int(value)
+    if ivalue <= 0:
+        raise argparse.ArgumentTypeError(f"{value} is an invalid positive int value")
+    return ivalue
+
+
 def parse_args(args):
     """Parse command line parameters
 
@@ -82,6 +89,13 @@ def parse_args(args):
         action="store_const",
         const=logging.DEBUG,
     )
+    parser.add_argument(
+        "-b",
+        "--batch-size",
+        help="instead of signing all files at once, sign in batches of --batch-size",
+        default=0,
+        type=check_positive,
+    )
     return parser.parse_args(args)
 
 
@@ -116,7 +130,7 @@ def main(args):
     signtool_candidates = args.signtool
     print("signtool", signtool_candidates)
 
-    batch_size = 10
+    batch_size = len(args.files) if not args.batch_size else args.batch_size
     batches = [
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
     ]
