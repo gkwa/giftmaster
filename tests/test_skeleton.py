@@ -12,12 +12,12 @@ __license__ = "MPL-2.0"
 
 
 @pytest.fixture
-def large_file_list() -> List[pathlib.Path]:
+def large_file_list() -> List[str]:
     scratch = pathlib.Path("scratch")
     scratch.mkdir(parents=True, exist_ok=True)
 
     lst2 = []
-    lst = list(pathlib.Path(r"C:\Windows").glob("**/*.exe"))
+    lst = list(pathlib.Path(r"C:\Windows\System32").glob("**/*.exe"))
     for path in lst[:1000]:
         new = scratch / path.name
         shutil.copy(path, new)
