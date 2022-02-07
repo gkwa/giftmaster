@@ -94,7 +94,6 @@ def parse_args(args):
         "--batch-size",
         help="instead of signing all files at once, sign in batches of --batch-size",
         default=0,
-        type=int,
         type=check_positive,
     )
     return parser.parse_args(args)
@@ -129,7 +128,6 @@ def main(args):
 
     file_list = args.files
     signtool_candidates = args.signtool
-    print("signtool", signtool_candidates)
 
     batch_size = len(args.files) if not args.batch_size else args.batch_size
     batches = [
