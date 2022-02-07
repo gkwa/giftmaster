@@ -94,6 +94,7 @@ def parse_args(args):
         "--batch-size",
         help="instead of signing all files at once, sign in batches of --batch-size",
         default=0,
+        type=int,
         type=check_positive,
     )
     return parser.parse_args(args)

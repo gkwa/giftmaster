@@ -4,7 +4,7 @@ from typing import List
 
 import pytest
 
-from giftmaster import signtool, skeleton
+from giftmaster import skeleton
 
 __author__ = "Taylor Monacelli"
 __copyright__ = "Taylor Monacelli"
