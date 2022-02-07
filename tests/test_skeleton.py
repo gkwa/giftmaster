@@ -1,4 +1,3 @@
-import logging
 import pathlib
 import shutil
 from typing import List
@@ -65,7 +64,7 @@ def test_main_batch_size(large_file_list):
         [
             *large_file_list,
             "--batch-size",
-            10,
+            "10",
             "--signtool",
             *candidates,
         ]
@@ -81,7 +80,7 @@ def test_main_default_signtool_makes_simple_invocation(small_file_list):
         [
             *small_file_list,
             "--batch-size",
-            10,
+            "10",
         ]
     )
     # captured = capsys.readouterr()
