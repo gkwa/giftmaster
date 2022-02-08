@@ -44,6 +44,8 @@ def test_main_with_too_many_files_causes_exception(large_file_list):
     skeleton.main(
         [
             *large_file_list,
+            "--batch-size",
+            "0",
             "--signtool",
             *candidates,
         ]
