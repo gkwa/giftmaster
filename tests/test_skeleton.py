@@ -18,7 +18,7 @@ def large_file_list() -> List[str]:
 
     lst2 = []
     lst = list(pathlib.Path(r"C:\Windows\System32").rglob("*.exe"))
-    for path in lst[:1000]:
+    for path in lst[:10000]:
         new = scratch / path.name
         shutil.copy(path, new)
         lst2.append(new)
