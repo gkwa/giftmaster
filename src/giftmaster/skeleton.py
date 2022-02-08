@@ -135,6 +135,7 @@ def main(args):
     batches = [
         file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
     ]
+    _logger.debug(f"there are {len(batches):,d} batch(s), with most having length {len(batches[0]):,d}")
 
     for batch in batches:
         tool = signtool.SignTool.from_list(
