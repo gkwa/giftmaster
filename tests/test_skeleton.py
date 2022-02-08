@@ -18,7 +18,7 @@ def large_file_list() -> List[str]:
 
     lst2 = []
     lst = list(pathlib.Path(r"C:\Windows\System32").rglob("*.exe"))
-    for path in lst[:10000]:
+    for path in lst[:100000]:
         new = scratch / path.name
         shutil.copy(path, new)
         lst2.append(new)
@@ -34,7 +34,7 @@ def small_file_list() -> List[pathlib.Path]:
     ]
 
 
-def test_main_with_too_many_files_causes_exception(large_file_list):
+def test_main_without_batches(large_file_list):
     # capsys is a pytest fixture that allows asserts agains stdout/stderr
     # https://docs.pytest.org/en/stable/capture.html
     candidates = [

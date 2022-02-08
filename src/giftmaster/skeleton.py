@@ -124,9 +124,11 @@ def main(args):
     """
     args = parse_args(args)
     setup_logging(args.loglevel)
+
     _logger.debug(f"file list {args.files}")
 
     file_list = args.files
+    _logger.debug(f"file list length: {len(file_list):,d}")
     signtool_candidates = args.signtool
 
     batch_size = len(args.files) if not args.batch_size else args.batch_size
