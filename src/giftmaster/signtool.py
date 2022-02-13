@@ -29,7 +29,7 @@ class SignTool:
             if len(paths) > 1:
                 msg = (
                     f"globs {globs} match too many paths on filesystem: {paths}.  "
-                    "Not sure i'm choosing the one you want, namely {path}.  Its "
+                    f"Not sure i'm choosing the one you want, namely {path}.  Its "
                     "the first one in the list"
                 )
                 logging.warning(msg)
