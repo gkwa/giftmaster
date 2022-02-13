@@ -1,7 +1,7 @@
 import logging
-import time
 import pathlib
 import subprocess
+import time
 from typing import List
 
 from foodsale import pathfromglob
@@ -67,7 +67,7 @@ class SignTool:
             logging.exception(ex)
             raise ex
 
-        epoch = time.strftime('%s')
+        epoch = int(time.time())
         log_path = pathlib.Path(f"signtool-{epoch}.log")
         err_path = pathlib.Path(f"signtool-{epoch}.err")
         stdout, stderr = process.communicate()
