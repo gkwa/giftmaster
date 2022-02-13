@@ -1,4 +1,5 @@
 import logging
+import time
 import pathlib
 import subprocess
 from typing import List
@@ -66,8 +67,9 @@ class SignTool:
             logging.exception(ex)
             raise ex
 
-        log_path = pathlib.Path(f"signtool.log")
-        err_path = pathlib.Path(f"signtool.err")
+        epoch = time.strftime('%s')
+        log_path = pathlib.Path(f"signtool-{epoch}.log")
+        err_path = pathlib.Path(f"signtool-{epoch}.err")
         stdout, stderr = process.communicate()
         err_path.write_text(stderr.decode())
         log_path.write_text(stdout.decode())

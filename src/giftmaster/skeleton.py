@@ -146,9 +146,7 @@ def main(args):
             dry_run=False,
         )
 
-        logging.debug(tool.sign_cmd())
         tool.run(tool.sign_cmd())
-        logging.debug(tool.verify_cmd())
         tool.run(tool.verify_cmd())
 
     _logger.info("Script ends here")
