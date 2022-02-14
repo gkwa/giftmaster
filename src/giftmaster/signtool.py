@@ -47,8 +47,6 @@ class SignTool:
     def __init__(self, files_to_sign):
         self.files_to_sign = get_abs_path(files_to_sign)
 
-
-
     @classmethod
     def from_list(cls, paths: List[str], signtool: List[str]):
         tool = cls(paths)
@@ -56,16 +54,25 @@ class SignTool:
         return tool
 
     def remove_already_signed(self):
+        done = []
         for path in self.files_to_sign:
             logging.debug(f"path:{path}")
             ret = self.run(self.verify_cmd([path]))
             if ret == 0:
-                lst = self.files_to_sign
-                lst.remove(path)
-                logging.debug(f"removing {path} from list of files to sign because {path} is already signed")
-                self.files_to_sign = lst
-
+                logging.debug(
+                    f"removing {path} from list of files to sign because {path} is already signed"
+                )
+                done.append(path)
+        x1 = set(self.files_to_sign)
+        y1 = set(done)
+        z1 = x1 - y1
+        self.files_to_sign = list(z1)
+        
     def run(self, cmd) -> int:
+        if not cmd:
+            logging.debug(f"skipping running cmd because cmd is empty")
+            return 0
+
         try:
             logging.debug(" ".join(cmd))
             process = subprocess.Popen(
@@ -84,7 +91,7 @@ class SignTool:
         err_path.write_text(stderr.decode())
         log_path.write_text(stdout.decode())
         logging.warning(stderr.decode())
-        
+
         logging.debug(f"returncode: {process.returncode}")
         return process.returncode
 
@@ -105,6 +112,9 @@ class SignTool:
         return cmd
 
     def sign_cmd(self):
+        if not self.files_to_sign:
+            return None
+
         cmd = [
             str(self.path),
             "sign",
