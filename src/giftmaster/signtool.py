@@ -57,8 +57,9 @@ class SignTool:
 
     def remove_already_signed(self):
         for path in self.files_to_sign:
-            ret = self.run(self.verify_cmd(path))
-            if ret == 1:
+            logging.debug(f"path:{path}")
+            ret = self.run(self.verify_cmd([path]))
+            if ret == 0:
                 lst = self.files_to_sign
                 lst.remove(path)
                 logging.debug(f"removing {path} from list of files to sign because {path} is already signed")
