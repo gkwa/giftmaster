@@ -135,6 +135,9 @@ def main(args):
 
     file_list = args.files
 
+    if not file_list:
+        return
+
     _logger.debug(f"file list length: {len(file_list):,d}")
     signtool_candidates = args.signtool
 
