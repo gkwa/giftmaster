@@ -67,7 +67,7 @@ class SignTool:
         y1 = set(done)
         z1 = x1 - y1
         self.files_to_sign = list(z1)
-        
+
     def run(self, cmd) -> int:
         if not cmd:
             logging.debug(f"skipping running cmd because cmd is empty")
@@ -121,6 +121,12 @@ class SignTool:
             "sign",
             "/debug",
             "/v",
+            "/f",
+            "c:/secgigo.cer",
+            "/csp",
+            "eToken Base Cryptographic Provider",
+            "/kc",
+            "$env:SAFENET_CLIENT_CREDENTIALS",
             "/n",
             "streambox",
             "/s",
