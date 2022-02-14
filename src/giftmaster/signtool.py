@@ -48,7 +48,7 @@ class SignTool:
         self.files_to_sign = get_abs_path(files_to_sign)
 
     @classmethod
-    def from_list(cls, paths: List[str], signtool: List[str], dry_run=False):
+    def from_list(cls, paths: List[str], signtool: List[str]):
         tool = cls(paths)
         tool.set_path(signtool)
         return tool

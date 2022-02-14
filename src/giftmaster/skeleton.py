@@ -58,6 +58,12 @@ def parse_args(args):
     """
     parser = argparse.ArgumentParser(description="Just a Fibonacci demonstration")
     parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        default=False,
+        help="don't actually run signtool if using --dry-run bool",
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version="giftmaster {ver}".format(ver=__version__),
@@ -144,7 +150,6 @@ def main(args):
         tool = signtool.SignTool.from_list(
             batch,
             signtool=signtool_candidates,
-            dry_run=False,
         )
         if not args.dry_run:
             tool.run(tool.sign_cmd())
