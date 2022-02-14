@@ -47,13 +47,24 @@ class SignTool:
     def __init__(self, files_to_sign):
         self.files_to_sign = get_abs_path(files_to_sign)
 
+
+
     @classmethod
     def from_list(cls, paths: List[str], signtool: List[str]):
         tool = cls(paths)
         tool.set_path(signtool)
         return tool
 
-    def run(self, cmd):
+    def remove_already_signed(self):
+        for path in self.files_to_sign:
+            ret = self.run(self.verify_cmd(path))
+            if ret == 1:
+                lst = self.files_to_sign
+                lst.remove(path)
+                logging.debug(f"removing {path} from list of files to sign because {path} is already signed")
+                self.files_to_sign = lst
+
+    def run(self, cmd) -> int:
         try:
             logging.debug(" ".join(cmd))
             process = subprocess.Popen(
@@ -72,8 +83,11 @@ class SignTool:
         err_path.write_text(stderr.decode())
         log_path.write_text(stdout.decode())
         logging.warning(stderr.decode())
+        
+        logging.debug(f"returncode: {process.returncode}")
+        return process.returncode
 
-    def verify_cmd(self):
+    def verify_cmd(self, paths: List[str]):
         prefix = [
             str(self.path),
             "verify",
@@ -81,7 +95,7 @@ class SignTool:
         ]
 
         x = ["/pa"]
-        x.extend(self.files_to_sign)
+        x.extend(paths)
 
         cmd = []
         cmd.extend(prefix)
