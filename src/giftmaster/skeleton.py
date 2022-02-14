@@ -128,6 +128,7 @@ def main(args):
     _logger.debug(f"file list {args.files}")
 
     file_list = args.files
+
     _logger.debug(f"file list length: {len(file_list):,d}")
     signtool_candidates = args.signtool
 
@@ -145,9 +146,9 @@ def main(args):
             signtool=signtool_candidates,
             dry_run=False,
         )
-
-        tool.run(tool.sign_cmd())
-        tool.run(tool.verify_cmd())
+        if not args.dry_run:
+            tool.run(tool.sign_cmd())
+            tool.run(tool.verify_cmd())
 
     _logger.info("Script ends here")
 
