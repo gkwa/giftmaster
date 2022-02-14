@@ -99,6 +99,7 @@ class SignTool:
         prefix = [
             str(self.path),
             "verify",
+            "/debug",
             "/v",
         ]
 
@@ -118,6 +119,7 @@ class SignTool:
         cmd = [
             str(self.path),
             "sign",
+            "/debug",
             "/v",
             "/n",
             "streambox",
