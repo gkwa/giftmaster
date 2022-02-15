@@ -1,4 +1,6 @@
+import base64
 import logging
+import os
 import pathlib
 import subprocess
 import time
@@ -116,6 +118,15 @@ class SignTool:
         if not self.files_to_sign:
             return None
 
+        var = os.environ["SAFENET_CLIENT_CREDENTIALS"]
+
+        base64_bytes = var.encode("ascii")
+        message_bytes = base64.b64decode(base64_bytes)
+        message = message_bytes.decode("ascii")
+
+        my_env = os.environ.copy()
+        my_env["SAFENET_CLIENT_CREDENTIALS"] = message
+
         cmd = [
             str(self.path),
             "sign",
@@ -126,7 +137,7 @@ class SignTool:
             "/csp",
             "eToken Base Cryptographic Provider",
             "/kc",
-            "$env:SAFENET_CLIENT_CREDENTIALS",
+            my_env["SAFENET_CLIENT_CREDENTIALS"],
             "/n",
             "streambox",
             "/fd",
