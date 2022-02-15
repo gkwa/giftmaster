@@ -119,14 +119,14 @@ class SignTool:
         if not self.files_to_sign:
             return None
 
-        var = os.environ["SAFENET_CLIENT_CREDENTIALS"]
+        credential1 = os.environ["SAFENET_CLIENT_CREDENTIALS"]
 
-        base64_bytes = var.encode("ascii")
+        base64_bytes = credential1.encode("ascii")
         message_bytes = base64.b64decode(base64_bytes)
-        message = message_bytes.decode("ascii")
+        credential = message_bytes.decode("ascii")
 
         my_env = os.environ.copy()
-        my_env["SAFENET_CLIENT_CREDENTIALS"] = message
+        my_env["SAFENET_CLIENT_CREDENTIALS"] = credential
 
         cmd = [
             str(self.path),
