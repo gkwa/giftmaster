@@ -10,10 +10,6 @@ class TimeStampURLManager:
         "http://tsa.starfieldtech.com",
     ]
 
-    urls = [
-        "http://timestamp.digicert.com",
-    ]
-
     @property
     def url(self):
         cls = type(self)
