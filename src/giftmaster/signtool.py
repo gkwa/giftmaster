@@ -95,7 +95,7 @@ class SignTool:
         if err := stderr.decode():
             logging.warning(err)
 
-        logging.debug(f"singtool.exe returned {process.returncode}")
+        logging.debug(f"singtool.exe's returncode: {process.returncode}")
         return process.returncode
 
     def verify_cmd(self, paths: List[str]):
