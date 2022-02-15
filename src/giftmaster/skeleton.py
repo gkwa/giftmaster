@@ -42,7 +42,6 @@ def main(args):
         if not args.dry_run:
             tool.remove_already_signed()
             tool.run(tool.sign_cmd())
-            tool.run(tool.verify_cmd())
 
     _logger.info("Script ends here")
 
