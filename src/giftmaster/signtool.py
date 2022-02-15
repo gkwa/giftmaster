@@ -58,11 +58,10 @@ class SignTool:
     def remove_already_signed(self):
         done = []
         for path in self.files_to_sign:
-            logging.debug(f"path:{path}")
             ret = self.run(self.verify_cmd([path]))
             if ret == 0:
                 logging.debug(
-                    f"removing {path} from list of files to sign because it's is already signed"
+                    f"{path} is already signed"
                 )
                 done.append(path)
         x1 = set(self.files_to_sign)
@@ -92,7 +91,9 @@ class SignTool:
         stdout, stderr = process.communicate()
         err_path.write_text(stderr.decode())
         log_path.write_text(stdout.decode())
-        logging.warning(stderr.decode())
+
+        if err := stderr.decode():
+            logging.warning(err)
 
         logging.debug(f"returncode: {process.returncode}")
         return process.returncode
