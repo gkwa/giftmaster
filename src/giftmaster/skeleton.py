@@ -20,11 +20,12 @@ References:
     - https://pip.pypa.io/en/stable/reference/pip_install
 """
 
-import argparse
 import logging
 import sys
 
-from giftmaster import __version__, signtool
+from giftmaster import __version__
+from giftmaster import args as argsmod
+from giftmaster import logger, signtool
 
 __author__ = "Taylor Monacelli"
 __copyright__ = "Taylor Monacelli"
@@ -33,89 +34,6 @@ __license__ = "MPL-2.0"
 _logger = logging.getLogger(__name__)
 
 
-# ---- CLI ----
-# The functions defined in this section are wrappers around the main Python
-# API allowing them to be called directly from the terminal as a CLI
-# executable/script.
-
-
-def check_positive(value):
-    ivalue = int(value)
-    if ivalue <= 0:
-        raise argparse.ArgumentTypeError(f"{value} is an invalid positive int value")
-    return ivalue
-
-
-def parse_args(args):
-    """Parse command line parameters
-
-    Args:
-      args (List[str]): command line parameters as list of strings
-          (for example  ``["--help"]``).
-
-    Returns:
-      :obj:`argparse.Namespace`: command line parameters namespace
-    """
-    parser = argparse.ArgumentParser(description="Just a Fibonacci demonstration")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        default=False,
-        help="don't actually run signtool if using --dry-run bool",
-    )
-    parser.add_argument(
-        "--version",
-        action="version",
-        version="giftmaster {ver}".format(ver=__version__),
-    )
-    parser.add_argument(
-        "--signtool",
-        nargs="*",
-        default=[
-            r"C:\Program Files*\Windows Kits\*\bin\*\x64\signtool.exe",
-        ],
-        help="list of absolute paths possibly containing wildcards that will match path to signtool.exe",
-    )
-    parser.add_argument(
-        dest="files", help="list of absolue paths to files to sign", nargs="*"
-    )
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        dest="loglevel",
-        help="set loglevel to INFO",
-        action="store_const",
-        const=logging.INFO,
-    )
-    parser.add_argument(
-        "-vv",
-        "--very-verbose",
-        dest="loglevel",
-        help="set loglevel to DEBUG",
-        action="store_const",
-        const=logging.DEBUG,
-    )
-    parser.add_argument(
-        "-b",
-        "--batch-size",
-        help="instead of signing all files at once, sign in batches of --batch-size",
-        default=0,
-        type=int,
-    )
-    return parser.parse_args(args)
-
-
-def setup_logging(loglevel):
-    """Setup basic logging
-
-    Args:
-      loglevel (int): minimum loglevel for emitting messages
-    """
-    logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-    logformat = "{%(filename)s:%(lineno)d} %(levelname)s - %(message)s"
-    logging.basicConfig(
-        level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
-    )
 
 
 def main(args):
@@ -128,8 +46,8 @@ def main(args):
       args (List[str]): command line parameters as list of strings
           (for example  ``["--verbose", "42"]``).
     """
-    args = parse_args(args)
-    setup_logging(args.loglevel)
+    args = argsmod.parse_args(args)
+    logger.setup_logging(args.loglevel)
 
     _logger.debug(f"file list {args.files}")
 
@@ -170,14 +88,4 @@ def run():
 
 
 if __name__ == "__main__":
-    # ^  This is a guard statement that will prevent the following code from
-    #    being executed in the case someone imports this file instead of
-    #    executing it as a script.
-    #    https://docs.python.org/3/library/__main__.html
-
-    # After installing your project with pip, users can also run your Python
-    # modules as scripts via the ``-m`` flag, as defined in PEP 338::
-    #
-    #     python -m giftmaster.skeleton 42
-    #
     run()
