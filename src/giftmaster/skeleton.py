@@ -1,25 +1,3 @@
-"""
-This is a skeleton file that can serve as a starting point for a Python
-console script. To run this script uncomment the following lines in the
-``[options.entry_points]`` section in ``setup.cfg``::
-
-    console_scripts =
-         fibonacci = giftmaster.skeleton:run
-
-Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
-which will install the command ``fibonacci`` inside your current environment.
-
-Besides console scripts, the header (i.e. until ``_logger``...) of this file can
-also be used as template for Python modules.
-
-Note:
-    This skeleton file can be safely removed if not needed!
-
-References:
-    - https://setuptools.pypa.io/en/latest/userguide/entry_point.html
-    - https://pip.pypa.io/en/stable/reference/pip_install
-"""
-
 import logging
 import sys
 
@@ -34,18 +12,7 @@ __license__ = "MPL-2.0"
 _logger = logging.getLogger(__name__)
 
 
-
-
 def main(args):
-    """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
-
-    Instead of returning the value from :func:`fib`, it prints the result to the
-    ``stdout`` in a nicely formatted message.
-
-    Args:
-      args (List[str]): command line parameters as list of strings
-          (for example  ``["--verbose", "42"]``).
-    """
     args = argsmod.parse_args(args)
     logger.setup_logging(args.loglevel)
 
@@ -75,15 +42,12 @@ def main(args):
         if not args.dry_run:
             tool.remove_already_signed()
             tool.run(tool.sign_cmd())
+            tool.run(tool.verify_cmd())
 
     _logger.info("Script ends here")
 
 
 def run():
-    """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
-
-    This function can be used as entry point to create console scripts with setuptools.
-    """
     main(sys.argv[1:])
 
 
