@@ -62,7 +62,7 @@ class SignTool:
             ret = self.run(self.verify_cmd([path]))
             if ret == 0:
                 logging.debug(
-                    f"removing {path} from list of files to sign because {path} is already signed"
+                    f"removing {path} from list of files to sign because it's is already signed"
                 )
                 done.append(path)
         x1 = set(self.files_to_sign)
