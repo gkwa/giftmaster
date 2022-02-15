@@ -143,8 +143,8 @@ class SignTool:
             type(self).HASH_ALGORITHM,
             "/d",
             "spectra",
-            "/tr",
-            type(self).url_manager.url,
+            # "/tr",
+            # type(self).url_manager.url,
             "/td",
             type(self).HASH_ALGORITHM,
         ]
