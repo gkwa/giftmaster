@@ -62,10 +62,7 @@ class SignTool:
             if ret == 0:
                 logging.debug(f"{path} is already signed")
                 done.append(path)
-        x1 = set(self.files_to_sign)
-        y1 = set(done)
-        z1 = x1 - y1
-        self.files_to_sign = list(z1)
+        self.files_to_sign = list(set(self.files_to_sign) - set(done))
 
     def run(self, cmd) -> int:
         if not cmd:
@@ -97,6 +94,10 @@ class SignTool:
         return process.returncode
 
     def verify_cmd(self, *paths: List[str]):
+        """
+        C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64\signtool.exe
+        verify /debug /v /pa C:\GitLab-Runner\builds\S5pSwHKm\0\streambox\media_player_win_installer\app\10bit\dxLib.dll
+        """
         prefix = [
             str(self.path),
             "verify",
