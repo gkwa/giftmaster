@@ -118,7 +118,9 @@ class SignTool:
         if not self.files_to_sign:
             return None
 
-        credential1 = os.environ["SAFENET_CLIENT_CREDENTIALS"]
+        credential1 = os.environ.get("SAFENET_CLIENT_CREDENTIALS", "")
+        if not credential1:
+            logging.warning(f"credentials for signing could not be set")
 
         base64_bytes = credential1.encode("ascii")
         message_bytes = base64.b64decode(base64_bytes)
@@ -143,7 +145,7 @@ class SignTool:
             "/fd",
             type(self).HASH_ALGORITHM,
             "/d",
-            "spectra",  #FIXME!
+            "spectra",  # FIXME!
             "/tr",
             type(self).url_manager.url,
             "/td",
