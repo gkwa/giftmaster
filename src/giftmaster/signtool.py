@@ -143,7 +143,7 @@ class SignTool:
             "/fd",
             type(self).HASH_ALGORITHM,
             "/d",
-            "spectra",
+            "spectra",  #FIXME!
             "/tr",
             type(self).url_manager.url,
             "/td",
