@@ -114,20 +114,19 @@ class SignTool:
 
         return cmd
 
+    def decode_credentials(self, _str) -> str:
+        base64_bytes = _str.encode("ascii")
+        message_bytes = base64.b64decode(base64_bytes)
+        return message_bytes.decode("ascii")
+
     def sign_cmd(self):
         if not self.files_to_sign:
             return None
 
-        credential1 = os.environ.get("SAFENET_CLIENT_CREDENTIALS", "")
-        if not credential1:
+        if not (password := os.environ.get("SAFENET_CLIENT_CREDENTIALS", "")):
             logging.warning(f"credentials for signing could not be set")
 
-        base64_bytes = credential1.encode("ascii")
-        message_bytes = base64.b64decode(base64_bytes)
-        credential = message_bytes.decode("ascii")
-
-        my_env = os.environ.copy()
-        my_env["SAFENET_CLIENT_CREDENTIALS"] = credential
+        password_decoded = self.decode_credentials(password)
 
         cmd = [
             str(self.path),
@@ -139,7 +138,7 @@ class SignTool:
             "/csp",
             "eToken Base Cryptographic Provider",
             "/kc",
-            my_env["SAFENET_CLIENT_CREDENTIALS"],
+            password_decoded,
             "/n",
             "streambox",
             "/fd",
