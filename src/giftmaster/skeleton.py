@@ -55,25 +55,7 @@ def main(args):
     signtool_candidates = args.signtool
 
     batch_size = len(args.files) if not args.batch_size else args.batch_size
-    batches = [
-        file_list[i : i + batch_size] for i in range(0, len(file_list), batch_size)
-    ]
-    _logger.debug(
-        f"there are {len(batches):,d} batch(s), with most having length {len(batches[0]):,d}"
-    )
-
-    dry_run = args.dry_run
-
-    for batch in batches:
-        tool = signtool.SignTool.from_list(
-            batch,
-            signtool=signtool_candidates,
-        )
-        if not dry_run:
-            tool.remove_already_signed()
-            tool.run(tool.sign_cmd())
-
-    _logger.info("Script ends here")
+    client(file_list, signtool_candidates, batch_size, dry_run=args.dry_run)
 
 
 def run():
