@@ -2,6 +2,7 @@ import base64
 import logging
 import os
 import pathlib
+import shlex
 import subprocess
 import time
 from typing import List
@@ -70,7 +71,7 @@ class SignTool:
             return 0
 
         try:
-            logging.debug(" ".join(cmd))
+            logging.debug(shlex.join(cmd))
             process = subprocess.Popen(
                 cmd,
                 stdout=subprocess.PIPE,
@@ -133,12 +134,6 @@ class SignTool:
             "sign",
             "/debug",
             "/v",
-            "/f",
-            "c:/sectigo.cer",
-            "/csp",
-            "eToken Base Cryptographic Provider",
-            "/kc",
-            password_decoded,
             "/n",
             "streambox",
             "/fd",
