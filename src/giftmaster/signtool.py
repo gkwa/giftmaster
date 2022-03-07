@@ -96,8 +96,7 @@ class SignTool:
 
     def verify_cmd(self, *paths: List[str]):
         """
-        C:\Program Files (x86)\Windows Kits\10\bin\10.0.18362.0\x64\signtool.exe
-        verify /debug /v /pa C:\GitLab-Runner\builds\S5pSwHKm\0\streambox\media_player_win_installer\app\10bit\dxLib.dll
+        signtool.exe verify /debug /v /pa C:\dxLib.dll
         """
         prefix = [
             str(self.path),
@@ -119,6 +118,19 @@ class SignTool:
         base64_bytes = _str.encode("ascii")
         message_bytes = base64.b64decode(base64_bytes)
         return message_bytes.decode("ascii")
+
+    @classmethod
+    def unsign_cmd(self, *paths):
+        cmd = [
+            str(self.path),
+            "remove",
+            "/v",
+            "/s",
+        ]
+
+        cmd.extend([str(pathlib.Path(path).resolve()) for path in paths])
+
+        return cmd
 
     def sign_cmd(self):
         if not self.files_to_sign:
