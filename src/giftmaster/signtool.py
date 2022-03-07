@@ -122,7 +122,7 @@ class SignTool:
     @classmethod
     def unsign_cmd(self, *paths):
         cmd = [
-            str(self.path),
+            "signtool", # fixme
             "remove",
             "/v",
             "/s",
