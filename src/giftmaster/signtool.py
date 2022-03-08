@@ -12,6 +12,19 @@ from foodsale import pathfromglob
 from giftmaster import timestamp
 
 
+def unsign_cmd(*paths, signtool="signtool"):
+    cmd = [
+        signtool,  # fixme
+        "remove",
+        "/v",
+        "/s",
+    ]
+
+    cmd.extend([str(pathlib.Path(path).resolve()) for path in paths])
+
+    return cmd
+
+
 def get_abs_path(file_list: List) -> List[pathlib.Path]:
     return [str(pathlib.Path(_str).resolve()) for _str in file_list]
 
@@ -19,6 +32,15 @@ def get_abs_path(file_list: List) -> List[pathlib.Path]:
 class SignTool:
     HASH_ALGORITHM = "SHA256"
     url_manager = timestamp.TimeStampURLManager()
+
+    def __init__(self, files_to_sign):
+        self.files_to_sign = get_abs_path(files_to_sign)
+
+    @classmethod
+    def from_list(cls, paths: List[str], signtool: List[str]):
+        tool = cls(paths)
+        tool.set_path(signtool)
+        return tool
 
     def set_path(self, globs: List[str]):
         def validate(globs):
@@ -46,15 +68,6 @@ class SignTool:
             return path
 
         self.path = validate(globs)
-
-    def __init__(self, files_to_sign):
-        self.files_to_sign = get_abs_path(files_to_sign)
-
-    @classmethod
-    def from_list(cls, paths: List[str], signtool: List[str]):
-        tool = cls(paths)
-        tool.set_path(signtool)
-        return tool
 
     def remove_already_signed(self):
         done = []
@@ -118,19 +131,6 @@ class SignTool:
         base64_bytes = _str.encode("ascii")
         message_bytes = base64.b64decode(base64_bytes)
         return message_bytes.decode("ascii")
-
-    @classmethod
-    def unsign_cmd(self, *paths):
-        cmd = [
-            "signtool", # fixme
-            "remove",
-            "/v",
-            "/s",
-        ]
-
-        cmd.extend([str(pathlib.Path(path).resolve()) for path in paths])
-
-        return cmd
 
     def sign_cmd(self):
         if not self.files_to_sign:
