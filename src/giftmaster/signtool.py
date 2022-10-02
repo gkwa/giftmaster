@@ -153,11 +153,11 @@ class SignTool:
             "/kc",
             password_decoded,
             "/n",
-            "streambox",
+            "Streambox",
             "/fd",
             type(self).HASH_ALGORITHM,
             "/d",
-            "spectra",  # FIXME!
+            "Streambox",
             "/tr",
             type(self).url_manager.url,
             "/td",
