@@ -108,7 +108,7 @@ class SignTool:
         log_path.write_text(stdout.decode())
 
         if err := stderr.decode():
-            logging.warning(err)
+            logging.critical(err)
             if "No private key is available" in err:
                 raise SigntoolPrivatekeyException("No private key is available")
 
