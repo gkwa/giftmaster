@@ -12,6 +12,12 @@ from foodsale import pathfromglob
 from giftmaster import timestamp
 
 
+class SigntoolPrivatekeyException(Exception):
+    def __init__(self, message="signtool couldn't get a private key"):
+        self.message = message
+        super().__init__(self.message)
+
+
 def unsign_cmd(*paths, signtool="signtool"):
     cmd = [
         signtool,  # fixme
@@ -103,6 +109,8 @@ class SignTool:
 
         if err := stderr.decode():
             logging.warning(err)
+            if "No private key is available" in err:
+                raise SigntoolPrivatekeyException("No private key is available")
 
         logging.debug(f"singtool.exe's returncode: {process.returncode}")
         return process.returncode
