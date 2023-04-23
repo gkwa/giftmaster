@@ -108,9 +108,9 @@ class SignTool:
         log_path.write_text(stdout.decode())
 
         if err := stderr.decode():
-            logging.critical(err)
             if "No private key is available" in err:
                 raise SigntoolPrivatekeyException(err)
+            logging.warning(err)
 
         logging.debug(f"singtool.exe's returncode: {process.returncode}")
         return process.returncode
