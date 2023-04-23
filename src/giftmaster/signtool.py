@@ -101,12 +101,17 @@ class SignTool:
             raise ex
 
         epoch = int(time.time())
-        log_path = pathlib.Path(f"signtool-{epoch}.log")
-        err_path = pathlib.Path(f"signtool-{epoch}.err")
         stdout, stderr = process.communicate()
-        err_path.write_text(stderr.decode())
+
+        log_path = pathlib.Path(f"signtool-{epoch}.log")
         log_path.write_text(stdout.decode())
 
+        err_path = pathlib.Path(f"signtool-{epoch}.err")
+        err_path.write_text(stderr.decode())
+
+        log_cmd_path = pathlib.Path(f"signtool-{epoch}-cmd.txt")
+        log_cmd_path.write_text(shlex.join(cmd))
+        
         if err := stderr.decode():
             if "No private key is available" in err:
                 raise SigntoolPrivatekeyException(err)
