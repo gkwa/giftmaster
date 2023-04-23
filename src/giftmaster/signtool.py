@@ -137,7 +137,12 @@ class SignTool:
             return None
 
         if not (password := os.environ.get("SAFENET_CLIENT_CREDENTIALS", "")):
-            logging.warning(f"credentials for signing could not be set")
+            msg = (
+                "credentials for signing could not be found from "
+                "$ENV:SAFENET_CLIENT_CREDENTIALS"
+            )
+            logging.critical(msg)
+            raise ValueError(msg)
 
         password_decoded = self.decode_credentials(password)
 
