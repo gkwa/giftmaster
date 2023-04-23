@@ -110,7 +110,7 @@ class SignTool:
         if err := stderr.decode():
             logging.critical(err)
             if "No private key is available" in err:
-                raise SigntoolPrivatekeyException("No private key is available")
+                raise SigntoolPrivatekeyException(err)
 
         logging.debug(f"singtool.exe's returncode: {process.returncode}")
         return process.returncode
