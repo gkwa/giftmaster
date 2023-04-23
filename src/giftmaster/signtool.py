@@ -18,12 +18,6 @@ class SigntoolPrivatekeyException(Exception):
         super().__init__(self.message)
 
 
-class SigntoolFileNotSignedException(Exception):
-    def __init__(self, message="file is not signed"):
-        self.message = message
-        super().__init__(self.message)
-
-
 def unsign_cmd(*paths, signtool="signtool"):
     cmd = [
         signtool,  # fixme
@@ -114,11 +108,8 @@ class SignTool:
         log_path.write_text(stdout.decode())
 
         if err := stderr.decode():
-            if "No private key is available".lower() in err.lower():
+            if "No private key is available" in err:
                 raise SigntoolPrivatekeyException(err)
-            if "No signature found".lower() in err.lower():
-                raise SigntoolFileNotSignedException(err)
-
             logging.warning(err)
 
         logging.debug(f"singtool.exe's returncode: {process.returncode}")
